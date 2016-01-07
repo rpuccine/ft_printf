@@ -12,18 +12,48 @@
 
 #include "ft_printf.h"
 
-int		ft_printf(const char *format, ...)
+int			ft_printf(const char *format, ...)
 {
-	char	buff[BUFF_SIZE];
-	char	*ret_conv;
+	va_list	ap;
+	t_sys	sys;
+	int		ret;
 
 	if (!format)
 		return (-1);
+	init_sys(&sys);
+	va_start(ap, format);
+	ret = ft_vprintf(format, &sys, ap);
+	va_end(ap);
+	if (ret < 0)
+		return (-1);
+	return (sys.b_write);
+}
+
+int			ft_vprintf(const char *format, t_sys *sys, va_list ap)
+{
 	while (*format)
 	{
 		if (*format != '%')
 		{
-			*buff = *format
+			if (copy_c(sys, *format) < 0)
+				return (-1);
 		}
+		else
+		{
+			if (conversion(sys, ap) < 0)
+				return (-1);
+		}
+		format++;
 	}
+	if (flush_buff(sys) < 0)
+		return (-1);
+	return (1);
+}
+
+int			conversion(t_sys *sys, va_list ap)
+{
+	(void) ap;
+	if (copy_c(sys, '*') < 0)
+		return (-1);
+	return (1);
 }

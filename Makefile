@@ -13,7 +13,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 INCLUDE_FOLDER = includes/
-SRCS = ft_printf.c
+SRCS = ft_printf.c init.c tools.c str.c
 SRC = $(addprefix src/, $(SRCS))
 OBJ = $(SRC:.c=.o)
 NAME = libftprintf.a
