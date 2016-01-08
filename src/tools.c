@@ -24,6 +24,16 @@ int		copy_c(t_sys *sys, char c)
 	return (1);
 }
 
+int		copy_arg(t_arg *sys_arg, t_sys *sys)
+{
+	int		i;
+
+	i = -1;
+	while (sys_arg->ret[++i])
+		copy_c(sys, sys_arg->ret[i]);
+	return (1);
+}
+
 int		flush_buff(t_sys *sys)
 {
 	int	ret;
