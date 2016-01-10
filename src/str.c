@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
 size_t	ft_strlen(const char *str)
@@ -32,13 +31,14 @@ void	concat_prefix(char **str, char *prefix)
 
 	len1 = ft_strlen(*str);
 	len2 = ft_strlen(prefix);
-	new = (char *)malloc(sizeof(char) * (len1 + len2));
+	new = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
 	i = -1;
 	while (++i < len2)
 		new[i] = prefix[i];
 	i = -1;
 	while (++i < len1)
 		new[len2 + i] = (*str)[i];
-	//free(*str);
+	new[len1 + len2] = '\0';
+	free(*str);
 	*str = new;
 }

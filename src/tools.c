@@ -10,7 +10,6 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "ft_printf.h"
 
 int		copy_c(t_sys *sys, char c)
@@ -24,13 +23,13 @@ int		copy_c(t_sys *sys, char c)
 	return (1);
 }
 
-int		copy_arg(t_arg *sys_arg, t_sys *sys)
+int		copy_arg(t_sys *sys)
 {
 	int		i;
 
 	i = -1;
-	while (sys_arg->ret[++i])
-		copy_c(sys, sys_arg->ret[i]);
+	while (sys->arg->ret[++i])
+		copy_c(sys, sys->arg->ret[i]);
 	return (1);
 }
 

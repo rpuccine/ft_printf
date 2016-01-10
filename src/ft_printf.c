@@ -12,25 +12,25 @@
 
 #include "ft_printf.h"
 
-t_flag		*flags = NULL;
-
 int			ft_printf(const char *format, ...)
 {
-	va_list	ap;
-	t_sys	sys;
-	int		ret;
+	va_list			ap;
+	static t_sys	*sys = NULL;
+	int				ret;
 
 	if (!format)
 		return (-1);
-	if (!flags)
-		init_flag();
-	init_sys(&sys);
+	if (!sys)
+	{
+		if (!(sys = init_sys()))
+			return (-1);
+	}
 	va_start(ap, format);
-	ret = ft_vprintf(format, &sys, ap);
+	ret = ft_vprintf(format, sys, ap);
 	va_end(ap);
 	if (ret < 0)
 		return (-1);
-	return (sys.b_write);
+	return (sys->b_write);
 }
 
 int			ft_vprintf(const char *format, t_sys *sys, va_list ap)
@@ -59,11 +59,9 @@ int			ft_vprintf(const char *format, t_sys *sys, va_list ap)
 
 int			conversion(const char *format, t_sys *sys, va_list ap)
 {
-	t_arg	sys_arg;
-
 	(void) ap;
-	parse_arg(++format, &sys_arg, sys);
-	return (sys_arg.len_arg);
+	parse_arg(++format, sys);
+	return (sys->arg->len_arg);
 	/*if (sys_arg.type < CHAR)
 		return (num_flow(&sys_arg, sys, ap));
 	return (str_flow(&sys_arg, sys, ap));*/

@@ -26,12 +26,7 @@
 # define CHAR 3
 # define STR 4
 
-typedef struct	s_sys
-{
-	char		buff[BUFF_SIZE + 1];
-	int			i_buff;
-	int			b_write;
-}				t_sys;
+struct s_sys; // TODO SET for real set_conv, bien gerer le flow
 
 typedef struct	s_arg
 {
@@ -42,15 +37,25 @@ typedef struct	s_arg
 	int			field;
 	int			precision;
 	int			len_arg;
-	void		(*prefix)(struct s_arg *);
-	void		(*padding)(struct s_arg *);
+	void		(*prefix)(struct s_sys *);
+	void		(*padding)(struct s_sys *);
 }				t_arg;
 
 typedef struct	s_flag
 {
 	char		c;
-	void		(*func)(t_arg *);
+	void		(*func)(struct s_sys *);
 }				t_flag;
+
+typedef struct	s_sys
+{
+	char		buff[BUFF_SIZE + 1];
+	int			i_buff;
+	int			b_write;
+	t_flag		*flags;
+	t_flag		*conv;
+	t_arg		*arg;
+}				t_sys;
 
 /*
 ** ft_printf.c
@@ -63,14 +68,17 @@ int				conversion(const char *format, t_sys *sys, va_list ap);
 /*
 ** init.c
 */
-void			init_sys(t_sys *sys);
+t_sys			*init_sys(void);
+int				init_flag(t_sys *sys);
+int				init_conv(t_sys *sys);
+void			init_sys_arg(t_sys *sys);
 
 /*
 ** tools.c
 */
 int				copy_c(t_sys *sys, char c);
 int				flush_buff(t_sys *sys);
-int				copy_arg(t_arg *sys_arg, t_sys *sys);
+int				copy_arg(t_sys *sys);
 
 /*
 ** str.c
@@ -81,15 +89,14 @@ void			concat_prefix(char **str, char *prefix);
 /*
 ** parse.c
 */
-void			prefix_0(t_arg *sys_arg);
-void			init_sys_arg(t_arg *sys_arg);
-int				parse_arg(const char *format, t_arg *sys_arg, t_sys *sys);
+int				parse_arg(const char *format, t_sys *sys);
 
 /*
 ** flag.c
 */
-void			init_flag(void);
-void			set_flag(const char *format, t_arg *sys_arg);
-int				get_i_prefix_flag(char c);
+void			prefix_hash(t_sys *sys);
+int				set_flag(const char *format, t_sys *sys, int nb);
+void			set_conv(const char *format, t_sys *sys);
+int				get_i_prefix_flag(t_sys *sys, char c);
 
 #endif
