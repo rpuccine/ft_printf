@@ -39,6 +39,6 @@ void	concat_prefix(char **str, char *prefix)
 	i = -1;
 	while (++i < len1)
 		new[len2 + i] = (*str)[i];
-	free(*str);
+	//free(*str);
 	*str = new;
 }

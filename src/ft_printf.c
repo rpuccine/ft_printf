@@ -62,7 +62,7 @@ int			conversion(const char *format, t_sys *sys, va_list ap)
 	t_arg	sys_arg;
 
 	(void) ap;
-	parse_arg(format, &sys_arg, sys);
+	parse_arg(++format, &sys_arg, sys);
 	return (sys_arg.len_arg);
 	/*if (sys_arg.type < CHAR)
 		return (num_flow(&sys_arg, sys, ap));

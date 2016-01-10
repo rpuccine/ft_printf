@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <stdarg.h>
 
+# include <stdio.h>
+
 # define BUFF_SIZE 1023
 # define NB_FLAG 1
 # define NUM_U 1
@@ -68,7 +70,7 @@ void			init_sys(t_sys *sys);
 */
 int				copy_c(t_sys *sys, char c);
 int				flush_buff(t_sys *sys);
-int		copy_arg(t_arg *sys_arg, t_sys *sys);
+int				copy_arg(t_arg *sys_arg, t_sys *sys);
 
 /*
 ** str.c
@@ -79,9 +81,15 @@ void			concat_prefix(char **str, char *prefix);
 /*
 ** parse.c
 */
-void	prefix_0(t_arg *sys_arg);
-void	init_flag(void);
-void	set_flag(const char *format, t_arg *sys_arg);
-void	init_sys_arg(t_arg *sys_arg);
-int		parse_arg(const char *format, t_arg *sys_arg, t_sys *sys);
+void			prefix_0(t_arg *sys_arg);
+void			init_sys_arg(t_arg *sys_arg);
+int				parse_arg(const char *format, t_arg *sys_arg, t_sys *sys);
+
+/*
+** flag.c
+*/
+void			init_flag(void);
+void			set_flag(const char *format, t_arg *sys_arg);
+int				get_i_prefix_flag(char c);
+
 #endif
