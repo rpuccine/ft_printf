@@ -99,4 +99,10 @@ int				set_flag(const char *format, t_sys *sys, int nb);
 void			set_conv(const char *format, t_sys *sys);
 int				get_i_prefix_flag(t_sys *sys, char c);
 
+/*
+** conv.c
+*/
+void			conv_num_rec(t_sys *sys, int num, int nb_call);
+char			get_char(int num, t_sys *sys);
+
 #endif
