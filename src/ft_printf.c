@@ -60,6 +60,7 @@ int			ft_vprintf(const char *format, t_sys *sys, va_list ap)
 int			conversion(const char *format, t_sys *sys, va_list ap)
 {
 	(void) ap;
+	init_sys_arg(sys);
 	parse_arg(++format, sys);
 	return (sys->arg->len_arg);
 	/*if (sys_arg.type < CHAR)

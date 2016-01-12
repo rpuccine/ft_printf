@@ -21,21 +21,23 @@
 
 # define BUFF_SIZE 1023
 # define NB_FLAG 1
+# define NB_CONV 5
 # define NUM_U 1
 # define NUM_S 2
 # define CHAR 3
 # define STR 4
 
-struct s_sys; // TODO SET for real set_conv, bien gerer le flow
+struct s_sys; // sortir du parse arg le flow set_conv, bien gerer le flow
 
 typedef struct	s_arg
 {
 	char		*ret;
-	int			type;
 	char		c;
+	int			type;
 	int			base;
 	int			field;
 	int			precision;
+	int			len_type;
 	int			len_arg;
 	void		(*prefix)(struct s_sys *);
 	void		(*padding)(struct s_sys *);
@@ -47,13 +49,20 @@ typedef struct	s_flag
 	void		(*func)(struct s_sys *);
 }				t_flag;
 
+typedef struct	s_conv
+{
+	char		c;
+	int			type;
+	int			base;
+}				t_conv;
+
 typedef struct	s_sys
 {
 	char		buff[BUFF_SIZE + 1];
 	int			i_buff;
 	int			b_write;
 	t_flag		*flags;
-	t_flag		*conv;
+	t_conv		*conv;
 	t_arg		*arg;
 }				t_sys;
 
@@ -96,13 +105,14 @@ int				parse_arg(const char *format, t_sys *sys);
 */
 void			prefix_hash(t_sys *sys);
 int				set_flag(const char *format, t_sys *sys, int nb);
-void			set_conv(const char *format, t_sys *sys);
+int				set_conv(const char *format, t_sys *sys);
 int				get_i_prefix_flag(t_sys *sys, char c);
+int				get_i_conv(t_sys *sys, char c);
 
 /*
 ** conv.c
 */
-void			conv_num_rec(t_sys *sys, int num, int nb_call);
+int				conv_num_rec(t_sys *sys, int num, int nb_call);
 char			get_char(int num, t_sys *sys);
 
 #endif

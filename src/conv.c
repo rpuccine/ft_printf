@@ -12,17 +12,20 @@
 
 #include "ft_printf.h"
 
-void	conv_num_rec(t_sys *sys, int num, int nb_call)
+int		conv_num_rec(t_sys *sys, int num, int nb_call)
 {
+	int	ret;
+
 	if (num < sys->arg->base)
 	{
 		sys->arg->ret = (char *)malloc(sizeof(char) * (nb_call + 1));
-		sys->arg->ret[nb_call - 1] = get_char(num, sys);
+		sys->arg->ret[0] = get_char(num, sys);
 		sys->arg->ret[nb_call] = '\0';
-		return ;
+		return (1);
 	}
-	conv_num_rec(sys, num / sys->arg->base);
-	sys->arg->ret[nb_call - 1] = get_char(num % sys->arg->base, sys);
+	ret = conv_num_rec(sys, num / sys->arg->base, ++nb_call);
+	sys->arg->ret[ret] = get_char(num % sys->arg->base, sys);
+	return (ret + 1);
 }
 
 char	get_char(int num, t_sys *sys)

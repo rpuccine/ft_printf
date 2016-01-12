@@ -41,7 +41,23 @@ int		init_flag(t_sys *sys)
 
 int		init_conv(t_sys *sys)
 {
-	(void)sys;
+	if (!(sys->conv = (t_conv *)malloc(sizeof(t_conv) * NB_CONV)))
+		return (-1);
+	sys->conv[0].c = 'd';
+	sys->conv[0].type = NUM_S;
+	sys->conv[0].base = 10;
+	sys->conv[1].c = 'i';
+	sys->conv[1].type = NUM_S;
+	sys->conv[1].base = 10;
+	sys->conv[2].c = 'u';
+	sys->conv[2].type = NUM_U;
+	sys->conv[2].base = 10;
+	sys->conv[3].c = 'o';
+	sys->conv[3].type = NUM_U;
+	sys->conv[3].base = 8;
+	sys->conv[4].c = 'x';
+	sys->conv[4].type = NUM_U;
+	sys->conv[4].base = 16;
 	return (1);
 }
 
