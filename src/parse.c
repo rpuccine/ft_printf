@@ -18,16 +18,23 @@ int		parse_arg(const char *format, t_sys *sys)
 
 	ret = set_flag(format, sys, 0);
 	format = format + ret;
-	/*sys_arg->ret = "*";
-	sys_arg->c = 'x';*/
 	if (set_conv(format, sys) < 0)
 		return (-1);
-	conv_num_rec(sys, 31, 1);
+	/*conv_num_rec(sys, 31, 1);
 	if (sys->arg->prefix)
-	{
 		sys->arg->prefix(sys);
-		//printf("call prefix ptr\n");
-	}
-	copy_arg(sys);
+	copy_arg(sys);*/
 	return (1);
+}
+
+void	num_flow(t_sys *sys, va_list ap)
+{
+	int		arg;
+
+	arg = va_arg(ap, int);
+	conv_num_rec(sys, arg, 1);
+	if (sys->arg->prefix)
+		sys->arg->prefix(sys);
+	if (sys->arg->padding)
+		sys->arg->padding(sys);
 }

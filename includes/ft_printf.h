@@ -99,6 +99,7 @@ void			concat_prefix(char **str, char *prefix);
 ** parse.c
 */
 int				parse_arg(const char *format, t_sys *sys);
+void			num_flow(t_sys *sys, va_list ap);
 
 /*
 ** flag.c

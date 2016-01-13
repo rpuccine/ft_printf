@@ -64,11 +64,12 @@ int		init_conv(t_sys *sys)
 void	init_sys_arg(t_sys *sys)
 {
 	sys->arg->ret = NULL;
-	sys->arg->type = -1;
 	sys->arg->c = -1;
+	sys->arg->type = -1;
 	sys->arg->base = -1;
 	sys->arg->field = -1;
 	sys->arg->precision = -1;
+	sys->arg->len_type = 4;
 	sys->arg->len_arg = 1;
 	sys->arg->prefix = NULL;
 	sys->arg->padding = NULL;
