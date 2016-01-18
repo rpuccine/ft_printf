@@ -18,12 +18,14 @@ int		parse_arg(const char *format, t_sys *sys)
 
 	ret = set_flag(format, sys, 0);
 	format = format + ret;
+	ret = set_field(format, sys);
+	format = format + ret;
+	ret = set_precision(format, sys);
+	format = format + ret;
+	printf("field: %d\n", sys->arg->field);
+	printf("precision: %d\n", sys->arg->precision);
 	if (set_conv(format, sys) < 0)
 		return (-1);
-	/*conv_num_rec(sys, 31, 1);
-	if (sys->arg->prefix)
-		sys->arg->prefix(sys);
-	copy_arg(sys);*/
 	return (1);
 }
 

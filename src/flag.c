@@ -16,18 +16,57 @@ int				set_flag(const char *format, t_sys *sys, int nb) //todo : gerer override 
 {
 	int		i;
 
-	//printf("*format = %c\n", *format);
 	if ((i = get_i_prefix_flag(sys, *format)) >= 0)
-	{
 		sys->arg->prefix = sys->flags[i].func;
-		//printf("set prefix ptr\n");
-	}
 	/*else if ((i = get_i_padding_flag(*format)) >= 0)
 		sys_arg->padding = flags[i].func;*/
 	else
 		return (nb);
 	sys->arg->len_arg++;
 	return (set_flag(++format, sys, ++nb));
+}
+
+int				set_precision(const char *format, t_sys *sys)
+{
+	int		len;
+	int		i;
+	int		total;
+
+	if (*format != '.')
+		return (0);
+	sys->arg->len_arg++;
+	format++;
+	len = get_len_field(format, sys, 0);
+	total = 0;
+	i = -1;
+	while (++i < len)
+		total += (format[i] - 48) * pow_ten(len - (i + 1));
+	sys->arg->precision = total;
+	return (len + 1);
+}
+
+int				set_field(const char *format, t_sys *sys)
+{
+	int		len;
+	int		i;
+	int		total;
+
+	if (!(len = get_len_field(format, sys, 0)))
+		return (0);
+	total = 0;
+	i = -1;
+	while (++i < len)
+		total += (format[i] - 48) * pow_ten(len - (i + 1));
+	sys->arg->field = total;
+	return (len);
+}
+
+int				get_len_field(const char *format, t_sys *sys, int nb)
+{
+	if (!is_digit(*format))
+		return (nb);
+	sys->arg->len_arg++;
+	return (get_len_field(++format, sys, ++nb));
 }
 
 int				set_conv(const char *format, t_sys *sys)

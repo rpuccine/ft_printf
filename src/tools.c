@@ -44,3 +44,17 @@ int		flush_buff(t_sys *sys)
 	sys->i_buff = 0;
 	return (1);
 }
+
+int		pow_ten(int pow)
+{
+	if (!pow)
+		return (1);
+	return (10 * pow_ten(--pow));
+}
+
+int		is_digit(char c)
+{
+	if (c > 47 && c < 58)
+		return (1);
+	return (0);
+}

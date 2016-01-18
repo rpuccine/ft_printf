@@ -27,7 +27,7 @@
 # define CHAR 3
 # define STR 4
 
-struct s_sys; // sortir du parse arg le flow set_conv, bien gerer le flow
+struct s_sys; // Implementer le precision  et field(padding) du num_flow, le str_flow
 
 typedef struct	s_arg
 {
@@ -86,8 +86,10 @@ void			init_sys_arg(t_sys *sys);
 ** tools.c
 */
 int				copy_c(t_sys *sys, char c);
-int				flush_buff(t_sys *sys);
 int				copy_arg(t_sys *sys);
+int				flush_buff(t_sys *sys);
+int				pow_ten(int pow);
+int				is_digit(char c);
 
 /*
 ** str.c
@@ -104,11 +106,14 @@ void			num_flow(t_sys *sys, va_list ap);
 /*
 ** flag.c
 */
-void			prefix_hash(t_sys *sys);
 int				set_flag(const char *format, t_sys *sys, int nb);
+int				set_precision(const char *format, t_sys *sys);
+int				set_field(const char *format, t_sys *sys);
+int				get_len_field(const char *format, t_sys *sys, int nb);
 int				set_conv(const char *format, t_sys *sys);
 int				get_i_prefix_flag(t_sys *sys, char c);
 int				get_i_conv(t_sys *sys, char c);
+void			prefix_hash(t_sys *sys);
 
 /*
 ** conv.c
