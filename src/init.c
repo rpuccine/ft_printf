@@ -35,7 +35,17 @@ int		init_flag(t_sys *sys)
 	if (!(sys->flags = (t_flag *)malloc(sizeof(t_flag) * NB_FLAG)))
 		return (-1);
 	sys->flags[0].c = '#';
+	sys->flags[0].prio = HIGH;
+	sys->flags[0].type = PREFIX;
 	sys->flags[0].func = prefix_hash;
+	sys->flags[1].c = ' ';
+	sys->flags[1].prio = LOW;
+	sys->flags[1].type = PREFIX;
+	sys->flags[1].func = prefix_posi_blank;
+	sys->flags[2].c = '+';
+	sys->flags[2].prio = HIGH;
+	sys->flags[2].type = PREFIX;
+	sys->flags[2].func = prefix_posi_sign;
 	return (1);
 }
 

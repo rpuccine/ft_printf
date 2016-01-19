@@ -22,21 +22,38 @@ int		parse_arg(const char *format, t_sys *sys)
 	format = format + ret;
 	ret = set_precision(format, sys);
 	format = format + ret;
-	printf("field: %d\n", sys->arg->field);
-	printf("precision: %d\n", sys->arg->precision);
 	if (set_conv(format, sys) < 0)
 		return (-1);
 	return (1);
 }
 
+void	precision(t_sys *sys)
+{
+	int		ret;
+
+	if ((ret = sys->arg->precision - ft_strlen(sys->arg->ret)) <= 0)
+		return ;
+	prefix_with_c(&(sys->arg->ret), '0', ret);
+}
+
+void	field(t_sys *sys)
+{
+	int		ret;
+
+	if ((ret = sys->arg->field - ft_strlen(sys->arg->ret)) <= 0)
+		return ;
+	prefix_with_c(&(sys->arg->ret), ' ', ret);
+}
+
 void	num_flow(t_sys *sys, va_list ap)
 {
-	int		arg;
-
-	arg = va_arg(ap, int);
-	conv_num_rec(sys, arg, 1);
+	sys->arg->value = va_arg(ap, int);
+	conv_num_rec(sys, sys->arg->value, 1);
+	precision(sys);
 	if (sys->arg->prefix)
-		sys->arg->prefix(sys);
+		sys->arg->prefix->func(sys);
 	if (sys->arg->padding)
-		sys->arg->padding(sys);
+		sys->arg->padding->func(sys);
+	else
+		field(sys);
 }

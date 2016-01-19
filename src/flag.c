@@ -15,14 +15,17 @@
 int				set_flag(const char *format, t_sys *sys, int nb) //todo : gerer override de flag
 {
 	int		i;
+	t_flag	**cur;
 
-	if ((i = get_i_prefix_flag(sys, *format)) >= 0)
-		sys->arg->prefix = sys->flags[i].func;
-	/*else if ((i = get_i_padding_flag(*format)) >= 0)
-		sys_arg->padding = flags[i].func;*/
-	else
+	if ((i = get_i_prefix_flag(sys, *format)) < 0)
 		return (nb);
 	sys->arg->len_arg++;
+	if (sys->flags[i].type == PREFIX)
+		cur = &(sys->arg->prefix);
+	else
+		cur = &(sys->arg->padding);
+	if (!(*cur)|| sys->flags[i].prio > (*cur)->prio)
+		*cur = sys->flags + i;
 	return (set_flag(++format, sys, ++nb));
 }
 
@@ -111,14 +114,4 @@ int				get_i_conv(t_sys *sys, char c)
 			return (i);
 	}
 	return (-1);
-}
-
-void	prefix_hash(t_sys *sys)
-{
-	if (sys->arg->c == 'o')
-		concat_prefix(&(sys->arg->ret), "0");
-	else if (sys->arg->c == 'x')
-		concat_prefix(&(sys->arg->ret), "0x");
-	else if (sys->arg->c == 'X')
-		concat_prefix(&(sys->arg->ret), "0X");
 }

@@ -20,34 +20,46 @@
 # include <stdio.h>
 
 # define BUFF_SIZE 1023
-# define NB_FLAG 1
+
+# define NB_FLAG 3
 # define NB_CONV 5
+
 # define NUM_U 1
 # define NUM_S 2
 # define CHAR 3
 # define STR 4
 
-struct s_sys; // Implementer le precision  et field(padding) du num_flow, le str_flow
+struct s_sys; // finir les func de flags + gerer leurs concurences,
+				//le str_flow - c_flow - ptr_flow
+
+typedef enum {LOW, HIGH} e_prio;
+
+typedef enum {PREFIX, PADDING} e_type_flag;
+
+typedef struct	s_flag
+{
+	char		c;
+	e_prio		prio;
+	e_type_flag	type;
+	void		(*func)(struct s_sys *);
+}				t_flag;
 
 typedef struct	s_arg
 {
 	char		*ret;
 	char		c;
+	int			value;
 	int			type;
 	int			base;
 	int			field;
 	int			precision;
 	int			len_type;
 	int			len_arg;
-	void		(*prefix)(struct s_sys *);
-	void		(*padding)(struct s_sys *);
+	t_flag		*prefix;
+	t_flag		*padding;
+	/*void		(*prefix)(struct s_sys *);
+	void		(*padding)(struct s_sys *);*/
 }				t_arg;
-
-typedef struct	s_flag
-{
-	char		c;
-	void		(*func)(struct s_sys *);
-}				t_flag;
 
 typedef struct	s_conv
 {
@@ -95,12 +107,16 @@ int				is_digit(char c);
 ** str.c
 */
 size_t			ft_strlen(const char *str);
+void			prefix_with_c(char **str, char c, int nb_c);
 void			concat_prefix(char **str, char *prefix);
+
 
 /*
 ** parse.c
 */
 int				parse_arg(const char *format, t_sys *sys);
+void			precision(t_sys *sys);
+void			field(t_sys *sys);
 void			num_flow(t_sys *sys, va_list ap);
 
 /*
@@ -113,7 +129,13 @@ int				get_len_field(const char *format, t_sys *sys, int nb);
 int				set_conv(const char *format, t_sys *sys);
 int				get_i_prefix_flag(t_sys *sys, char c);
 int				get_i_conv(t_sys *sys, char c);
+
+/*
+** flag_func.c
+*/
 void			prefix_hash(t_sys *sys);
+void			prefix_posi_blank(t_sys *sys);
+void			prefix_posi_sign(t_sys *sys);
 
 /*
 ** conv.c
