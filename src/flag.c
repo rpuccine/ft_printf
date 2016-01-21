@@ -22,8 +22,10 @@ int				set_flag(const char *format, t_sys *sys, int nb) //todo : gerer override 
 	sys->arg->len_arg++;
 	if (sys->flags[i].type == PREFIX)
 		cur = &(sys->arg->prefix);
-	else
+	else if (sys->flags[i].type == PADDING)
 		cur = &(sys->arg->padding);
+	else
+		cur = &(sys->arg->sign);
 	if (!(*cur)|| sys->flags[i].prio > (*cur)->prio)
 		*cur = sys->flags + i;
 	return (set_flag(++format, sys, ++nb));

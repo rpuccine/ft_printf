@@ -41,6 +41,25 @@ void	prefix_with_c(char **str, char c, int nb_c)
 	*str = new;
 }
 
+void	suffix_with_c(char **str, char c, int nb_c)
+{
+	int		len_str;
+	int		i;
+	char	*new;
+
+	len_str = ft_strlen(*str);
+	new = (char *)malloc(sizeof(char) * (len_str + nb_c + 1));
+	i = -1;
+	while (++i < len_str)
+		new[i] = (*str)[i];
+	i = -1;
+	while (++i < nb_c)
+		new[i + len_str] = c;
+	new[i + len_str] = '\0';
+	free(*str);
+	*str = new;
+}
+
 void	concat_prefix(char **str, char *prefix)
 {
 	int		len1;

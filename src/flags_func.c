@@ -33,3 +33,23 @@ void	prefix_posi_sign(t_sys *sys)
 	if (sys->arg->type == NUM_S && sys->arg->value > 0)
 		prefix_with_c(&(sys->arg->ret), '+', 1);
 }
+
+void	field_zero(t_sys *sys)
+{
+	int		ret;
+
+	if (sys->arg->type < END_NB && sys->arg->precision != -1)
+		return ;
+	if ((ret = sys->arg->field - ft_strlen(sys->arg->ret)) <= 0)
+		return ;
+	prefix_with_c(&(sys->arg->ret), '0', ret);
+}
+
+void	field_neg(t_sys *sys)
+{
+	int		ret;
+
+	if ((ret = sys->arg->field - ft_strlen(sys->arg->ret)) <= 0)
+		return ;
+	suffix_with_c(&(sys->arg->ret), ' ', ret);
+}

@@ -21,20 +21,22 @@
 
 # define BUFF_SIZE 1023
 
-# define NB_FLAG 3
+# define NB_FLAG 5
 # define NB_CONV 5
 
-# define NUM_U 1
+/*# define NUM_U 1
 # define NUM_S 2
 # define CHAR 3
-# define STR 4
+# define STR 4*/
 
 struct s_sys; // finir les func de flags + gerer leurs concurences,
 				//le str_flow - c_flow - ptr_flow
 
 typedef enum {LOW, HIGH} e_prio;
 
-typedef enum {PREFIX, PADDING} e_type_flag;
+typedef enum {PREFIX, PADDING, SIGN} e_type_flag;
+
+typedef enum {NUM_U, NUM_S, END_NB, CHAR, STR} e_t_arg;
 
 typedef struct	s_flag
 {
@@ -49,13 +51,14 @@ typedef struct	s_arg
 	char		*ret;
 	char		c;
 	int			value;
-	int			type;
+	e_t_arg		type;
 	int			base;
 	int			field;
 	int			precision;
 	int			len_type;
 	int			len_arg;
 	t_flag		*prefix;
+	t_flag		*sign;
 	t_flag		*padding;
 	/*void		(*prefix)(struct s_sys *);
 	void		(*padding)(struct s_sys *);*/
@@ -108,6 +111,7 @@ int				is_digit(char c);
 */
 size_t			ft_strlen(const char *str);
 void			prefix_with_c(char **str, char c, int nb_c);
+void			suffix_with_c(char **str, char c, int nb_c);
 void			concat_prefix(char **str, char *prefix);
 
 
@@ -136,6 +140,8 @@ int				get_i_conv(t_sys *sys, char c);
 void			prefix_hash(t_sys *sys);
 void			prefix_posi_blank(t_sys *sys);
 void			prefix_posi_sign(t_sys *sys);
+void			field_zero(t_sys *sys);
+void			field_neg(t_sys *sys);
 
 /*
 ** conv.c

@@ -50,6 +50,8 @@ void	num_flow(t_sys *sys, va_list ap)
 	sys->arg->value = va_arg(ap, int);
 	conv_num_rec(sys, sys->arg->value, 1);
 	precision(sys);
+	if (sys->arg->sign)
+		sys->arg->sign->func(sys);
 	if (sys->arg->prefix)
 		sys->arg->prefix->func(sys);
 	if (sys->arg->padding)

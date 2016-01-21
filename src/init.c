@@ -40,12 +40,20 @@ int		init_flag(t_sys *sys)
 	sys->flags[0].func = prefix_hash;
 	sys->flags[1].c = ' ';
 	sys->flags[1].prio = LOW;
-	sys->flags[1].type = PREFIX;
+	sys->flags[1].type = SIGN;
 	sys->flags[1].func = prefix_posi_blank;
 	sys->flags[2].c = '+';
 	sys->flags[2].prio = HIGH;
-	sys->flags[2].type = PREFIX;
+	sys->flags[2].type = SIGN;
 	sys->flags[2].func = prefix_posi_sign;
+	sys->flags[3].c = '0';
+	sys->flags[3].prio = LOW;
+	sys->flags[3].type = PADDING;
+	sys->flags[3].func = field_zero;
+	sys->flags[4].c = '-';
+	sys->flags[4].prio = HIGH;
+	sys->flags[4].type = PADDING;
+	sys->flags[4].func = field_neg;
 	return (1);
 }
 
@@ -83,4 +91,5 @@ void	init_sys_arg(t_sys *sys)
 	sys->arg->len_arg = 1;
 	sys->arg->prefix = NULL;
 	sys->arg->padding = NULL;
+	sys->arg->sign = NULL;
 }
