@@ -12,6 +12,15 @@
 
 #include "ft_printf.h"
 
+int		str_cmp(const char *str, const char *sample, int nb)
+{
+	if (!(*sample))
+		return (nb);
+	if (!(*str) || *str != *sample)
+		return (-1);
+	return (str_cmp(++str, ++sample, ++nb));
+}
+
 size_t	ft_strlen(const char *str)
 {
 	int	ret;

@@ -24,13 +24,13 @@ void	prefix_hash(t_sys *sys)
 
 void	prefix_posi_blank(t_sys *sys)
 {
-	if (sys->arg->type == NUM_S && sys->arg->value > 0)
+	if (sys->arg->type == NUM_S && sys->arg->val.t_u_j > 0)
 		prefix_with_c(&(sys->arg->ret), ' ', 1);
 }
 
 void	prefix_posi_sign(t_sys *sys)
 {
-	if (sys->arg->type == NUM_S && sys->arg->value > 0)
+	if (sys->arg->type == NUM_S && sys->arg->val.t_u_j > 0)
 		prefix_with_c(&(sys->arg->ret), '+', 1);
 }
 

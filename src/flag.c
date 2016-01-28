@@ -12,7 +12,32 @@
 
 #include "ft_printf.h"
 
-int				set_flag(const char *format, t_sys *sys, int nb) //todo : gerer override de flag
+int				set_len_modif(const char *format, t_sys *sys)
+{
+	int		ret;
+
+	if ((ret = str_cmp(format, "hh", 0)) > 0)
+		sys->arg->pre_len_modif = 0;
+	else if ((ret = str_cmp(format, "h", 0)) > 0)
+		sys->arg->pre_len_modif = 1;
+	else if ((ret = str_cmp(format, "ll", 0)) > 0)
+		sys->arg->pre_len_modif = 3;
+	else if ((ret = str_cmp(format, "l", 0)) > 0)
+		sys->arg->pre_len_modif = 2;
+	else if ((ret = str_cmp(format, "j", 0)) > 0)
+		sys->arg->pre_len_modif = 4;
+	else if ((ret = str_cmp(format, "z", 0)) > 0)
+		sys->arg->pre_len_modif = 5;
+	else
+	{
+		sys->arg->pre_len_modif = 6;
+		return (0);
+	}
+	sys->arg->len_arg += ret;
+	return (ret);
+}
+
+int				set_flag(const char *format, t_sys *sys, int nb)
 {
 	int		i;
 	t_flag	**cur;

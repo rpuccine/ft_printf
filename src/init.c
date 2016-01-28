@@ -25,9 +25,46 @@ t_sys	*init_sys(void)
 		return (NULL);
 	if (init_conv(sys) < 0)
 		return (NULL);
+	init_get_arg(sys);
+	init_tab_len(sys);
 	if (!(sys->arg = (t_arg *)malloc(sizeof(t_arg))))
 		return (NULL);
 	return (sys);
+}
+
+void	init_get_arg(t_sys *sys)
+{
+	sys->get_arg[CHAR] = get_stdarg_char;
+	sys->get_arg[U_CHAR] = get_stdarg_uchar;
+	sys->get_arg[SHORT] = get_stdarg_short;
+	sys->get_arg[U_SHORT] = get_stdarg_ushort;
+	sys->get_arg[INT] = get_stdarg_int;
+	sys->get_arg[LONG] = get_stdarg_long;
+	sys->get_arg[U_LONG] = get_stdarg_ulong;
+	sys->get_arg[LONG_LONG] = get_stdarg_longlong;
+	sys->get_arg[U_LONG_LONG] = get_stdarg_ulonglong;
+	sys->get_arg[INT_MAX] = get_stdarg_intmax;
+	sys->get_arg[U_INT_MAX] = get_stdarg_uintmax;
+	sys->get_arg[SIZE_T] = get_stdarg_sizet;
+	sys->get_arg[SSIZE_T] = get_stdarg_ssizet;
+}
+
+void	init_tab_len(t_sys *sys)
+{
+	sys->tab_len[0][0] = U_CHAR;
+	sys->tab_len[0][1] = U_SHORT;
+	sys->tab_len[0][2] = U_LONG;
+	sys->tab_len[0][3] = U_LONG_LONG;
+	sys->tab_len[0][4] = U_INT_MAX;
+	sys->tab_len[0][5] = SIZE_T;
+	sys->tab_len[0][6] = INT;
+	sys->tab_len[1][0] = CHAR;
+	sys->tab_len[1][1] = SHORT;
+	sys->tab_len[1][2] = LONG;
+	sys->tab_len[1][3] = LONG_LONG;
+	sys->tab_len[1][4] = INT_MAX;
+	sys->tab_len[1][5] = SSIZE_T;
+	sys->tab_len[1][6] = INT;
 }
 
 int		init_flag(t_sys *sys)
@@ -76,6 +113,12 @@ int		init_conv(t_sys *sys)
 	sys->conv[4].c = 'x';
 	sys->conv[4].type = NUM_U;
 	sys->conv[4].base = 16;
+	sys->conv[5].c = 'c';
+	sys->conv[5].type = CHARS;
+	sys->conv[5].base = -1;
+	sys->conv[6].c = 's';
+	sys->conv[6].type = STR;
+	sys->conv[6].base = -1;
 	return (1);
 }
 
@@ -83,8 +126,10 @@ void	init_sys_arg(t_sys *sys)
 {
 	sys->arg->ret = NULL;
 	sys->arg->c = -1;
+	sys->arg->val.t_u_j = 0;
 	sys->arg->type = -1;
-	sys->arg->base = -1;
+	sys->arg->len_modif = INT;
+	sys->arg->base = 0;
 	sys->arg->field = -1;
 	sys->arg->precision = -1;
 	sys->arg->len_type = 4;
