@@ -39,6 +39,7 @@ void	init_get_arg(t_sys *sys)
 	sys->get_arg[SHORT] = get_stdarg_short;
 	sys->get_arg[U_SHORT] = get_stdarg_ushort;
 	sys->get_arg[INT] = get_stdarg_int;
+	sys->get_arg[U_INT] = get_stdarg_uint;
 	sys->get_arg[LONG] = get_stdarg_long;
 	sys->get_arg[U_LONG] = get_stdarg_ulong;
 	sys->get_arg[LONG_LONG] = get_stdarg_longlong;
@@ -57,7 +58,7 @@ void	init_tab_len(t_sys *sys)
 	sys->tab_len[0][3] = U_LONG_LONG;
 	sys->tab_len[0][4] = U_INT_MAX;
 	sys->tab_len[0][5] = SIZE_T;
-	sys->tab_len[0][6] = INT;
+	sys->tab_len[0][6] = U_INT;
 	sys->tab_len[1][0] = CHAR;
 	sys->tab_len[1][1] = SHORT;
 	sys->tab_len[1][2] = LONG;
@@ -126,7 +127,11 @@ void	init_sys_arg(t_sys *sys)
 {
 	sys->arg->ret = NULL;
 	sys->arg->c = -1;
-	sys->arg->val.t_u_j = 0;
+	sys->arg->val.num_u = 0;
+	sys->arg->val.num = 0;
+	sys->arg->val.c = 0;
+	sys->arg->val.c_u = 0;
+	sys->arg->val.str = NULL;
 	sys->arg->type = -1;
 	sys->arg->len_modif = INT;
 	sys->arg->base = 0;

@@ -45,6 +45,10 @@ int		main()
 
 	printf("true Printf: %hhd \n", 59000);
 	printf("true Printf: %hd \n", 59000);
+	printf("true Printf: %hhu \n", 59000);
+	printf("true Printf: %hu \n", 59000);
+	printf("true Printf: %d \n", -6);
+	printf("true Printf: %d \n", -6789);
 
 	/*printf("cou %x\n", 31);
 	printf("cou %d\n", -31);
@@ -75,6 +79,12 @@ int		main()
 
 	ft_printf("fals printf: %hhd \n", 59000);
 	ft_printf("fals printf: %hd \n", 59000);
+	ft_printf("fals printf: %hhu \n", 59000);
+	ft_printf("fals printf: %hu \n", 59000);
+	ft_printf("fals printf: %d \n", -6);
+	ft_printf("fals printf: %d \n", -6789);
+
+
 
 
 	/*ft_printf("cou %x\n", 31);

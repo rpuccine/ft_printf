@@ -17,15 +17,15 @@ void	str_flow(t_sys *sys, va_list ap)
 	int		len_str;
 	int		i;
 
-	sys->arg->val.t_str = va_arg(ap, char*);
+	sys->arg->val.str = va_arg(ap, char*);
 	if (sys->arg->precision > 0)
 		len_str = sys->arg->precision;
 	else
-		len_str = ft_strlen(sys->arg->val.t_str);
+		len_str = ft_strlen(sys->arg->val.str);
 	sys->arg->ret = (char *)malloc(sizeof(char) * (len_str + 1));
 	i = -1;
 	while (++i < len_str)
-		sys->arg->ret[i] = sys->arg->val.t_str[i];
+		sys->arg->ret[i] = sys->arg->val.str[i];
 	sys->arg->ret[len_str] = '\0';
 	if (sys->arg->padding)
 		sys->arg->padding->func(sys);
@@ -35,9 +35,11 @@ void	str_flow(t_sys *sys, va_list ap)
 
 void	char_flow(t_sys *sys, va_list ap)
 {
-	sys->arg->val.t_int = va_arg(ap, int);
+	int		c;
+
+	c = va_arg(ap, int);
 	sys->arg->ret = (char *)malloc(sizeof(char) * 2);
-	sys->arg->ret[0] = (unsigned char)sys->arg->val.t_int;
+	sys->arg->ret[0] = (unsigned char)c;
 	sys->arg->ret[1] = '\0';
 	if (sys->arg->padding)
 		sys->arg->padding->func(sys);
@@ -48,10 +50,13 @@ void	char_flow(t_sys *sys, va_list ap)
 void	num_flow(t_sys *sys, va_list ap)
 {
 	sys->arg->len_modif = sys->tab_len[sys->arg->type][sys->arg->pre_len_modif];
-	printf("******* arg t %d, pre mod %d, mod %d \n", sys->arg->type,
-		sys->arg->pre_len_modif, sys->arg->len_modif);
+	/*printf("******* type %d, pre mod %d, mod %d \n", sys->arg->type,
+		sys->arg->pre_len_modif, sys->arg->len_modif);*/
 	sys->get_arg[sys->arg->len_modif](sys, ap);
-	conv_num_rec(sys, sys->arg->val.t_u_j, 1);
+	if (sys->arg->type == NUM_U)
+		conv_num_rec(sys, sys->arg->val.num_u, 1);
+	else
+		conv_num_rec_s(sys, sys->arg->val.num, 1, -1);
 	precision(sys);
 	if (sys->arg->sign)
 		sys->arg->sign->func(sys);
@@ -76,6 +81,35 @@ int		conv_num_rec(t_sys *sys, uintmax_t num, int nb_call)
 	}
 	ret = conv_num_rec(sys, num / sys->arg->base, ++nb_call);
 	sys->arg->ret[ret] = get_char(num % sys->arg->base, sys);
+	return (ret + 1);
+}
+
+int		conv_num_rec_s(t_sys *sys, intmax_t num, int nb_call, int sign)
+{
+	int	ret;
+
+	if (sign == -1)
+	{
+		if (num < 0)
+		{
+			sign = 1;
+			num = num * -1;
+		}
+		else
+			sign = 0;
+	}
+
+	if ((uintmax_t)num < sys->arg->base)
+	{
+		sys->arg->ret = (char *)malloc(sizeof(char) * (nb_call + sign + 1));
+		if (sign)
+			sys->arg->ret[0] = '-';
+		sys->arg->ret[0 + sign] = get_char(num, sys);
+		sys->arg->ret[nb_call + sign] = '\0';
+		return (1);
+	}
+	ret = conv_num_rec_s(sys, num / sys->arg->base, ++nb_call, sign);
+	sys->arg->ret[ret + sign] = get_char(num % sys->arg->base, sys);
 	return (ret + 1);
 }
 

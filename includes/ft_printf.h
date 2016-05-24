@@ -23,14 +23,14 @@
 
 # define NB_FLAG 5
 # define NB_CONV 7
-# define NB_LEN 13
+# define NB_LEN 14
 
 /*# define NUM_U 1
 # define NUM_S 2
 # define CHAR 3
 # define STR 4*/
 
-struct s_sys;	// negatif num_flow - ptr_flow - wide char - len flags
+struct s_sys;	// ptr_flow - wide char
 
 typedef enum			e_bool{FALSE, TRUE} t_bool;
 
@@ -40,26 +40,17 @@ typedef enum			e_type_flag {PREFIX, PADDING, SIGN} t_type_flag;
 
 typedef enum			e_t_arg {NUM_U, NUM_S, END_NB, ESCAPE, CHARS, STR} t_t_arg;
 
-typedef enum			e_len {CHAR, U_CHAR, SHORT, U_SHORT, INT, LONG, U_LONG, \
+typedef enum			e_len {CHAR, U_CHAR, SHORT, U_SHORT, INT, U_INT, LONG, U_LONG, \
 	LONG_LONG, U_LONG_LONG, INT_MAX, U_INT_MAX, SIZE_T, SSIZE_T} t_len;
 
-typedef union			u_arg_val
+typedef struct			s_val
 {
-	unsigned char		t_u_hh;
-	char				t_hh;
-	unsigned short		t_u_h;
-	short				t_h;
-	int					t_int;
-	unsigned long		t_u_l;
-	long				t_l;
-	unsigned long long	t_u_ll;
-	long long			t_ll;
-	size_t				t_u_z;
-	ssize_t				t_z;
-	uintmax_t			t_u_j;
-	intmax_t			t_j;
-	char				*t_str;
-}						t_arg_val;
+	uintmax_t			num_u;
+	intmax_t			num;
+	char				c;
+	unsigned char		c_u;
+	char				*str;
+}						t_val;
 
 typedef struct			s_flag
 {
@@ -73,7 +64,7 @@ typedef struct			s_arg
 {
 	char				*ret;
 	char				c;
-	t_arg_val			val;
+	t_val				val;
 	t_t_arg				type;
 	int					pre_len_modif;
 	t_len				len_modif;
@@ -181,6 +172,7 @@ void					char_flow(t_sys *sys, va_list ap);
 void					str_flow(t_sys *sys, va_list ap);
 void					num_flow(t_sys *sys, va_list ap);
 int						conv_num_rec(t_sys *sys, uintmax_t num, int nb_call);
+int						conv_num_rec_s(t_sys *sys, intmax_t num, int nb_call, int sign);
 char					get_char(int num, t_sys *sys);
 
 /*
@@ -190,6 +182,7 @@ void					get_stdarg_uchar(t_sys *sys, va_list ap);
 void					get_stdarg_char(t_sys *sys, va_list ap);
 void					get_stdarg_ushort(t_sys *sys, va_list ap);
 void					get_stdarg_short(t_sys *sys, va_list ap);
+void					get_stdarg_uint(t_sys *sys, va_list ap);
 void					get_stdarg_int(t_sys *sys, va_list ap);
 void					get_stdarg_ulong(t_sys *sys, va_list ap);
 void					get_stdarg_long(t_sys *sys, va_list ap);
