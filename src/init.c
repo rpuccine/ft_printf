@@ -120,6 +120,9 @@ int		init_conv(t_sys *sys)
 	sys->conv[6].c = 's';
 	sys->conv[6].type = STR;
 	sys->conv[6].base = -1;
+	sys->conv[7].c = 'p';
+	sys->conv[7].type = PTR;
+	sys->conv[7].base = 16;
 	return (1);
 }
 

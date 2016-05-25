@@ -69,6 +69,8 @@ int			conversion(const char *format, t_sys *sys, va_list ap)
 		char_flow(sys, ap);
 	else if (sys->arg->type == STR)
 		str_flow(sys, ap);
+	else if (sys->arg->type == PTR)
+		ptr_flow(sys, ap);
 	copy_arg(sys);
 	return (sys->arg->len_arg);
 	/*if (sys_arg.type < CHAR)

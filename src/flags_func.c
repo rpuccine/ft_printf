@@ -16,7 +16,7 @@ void	prefix_hash(t_sys *sys)
 {
 	if (sys->arg->c == 'o')
 		concat_prefix(&(sys->arg->ret), "0");
-	else if (sys->arg->c == 'x')
+	else if (sys->arg->c == 'x' || sys->arg->c == 'p')
 		concat_prefix(&(sys->arg->ret), "0x");
 	else if (sys->arg->c == 'X')
 		concat_prefix(&(sys->arg->ret), "0X");

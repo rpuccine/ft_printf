@@ -12,6 +12,17 @@
 
 #include "ft_printf.h"
 
+void	ptr_flow(t_sys *sys, va_list ap)
+{
+	sys->arg->val.ptr = va_arg(ap, void*);
+	conv_num_rec(sys, (uintmax_t)sys->arg->val.ptr, 1);
+	prefix_hash(sys);
+	if (sys->arg->padding)
+		sys->arg->padding->func(sys);
+	else
+		field(sys);
+}
+
 void	str_flow(t_sys *sys, va_list ap)
 {
 	int		len_str;
@@ -36,11 +47,22 @@ void	str_flow(t_sys *sys, va_list ap)
 void	char_flow(t_sys *sys, va_list ap)
 {
 	int		c;
+	wchar_t	w;
 
-	c = va_arg(ap, int);
-	sys->arg->ret = (char *)malloc(sizeof(char) * 2);
-	sys->arg->ret[0] = (unsigned char)c;
-	sys->arg->ret[1] = '\0';
+	if (sys->arg->pre_len_modif == 2)
+	{
+		w = (wchar_t)va_arg(ap, wint_t);
+		sys->arg->ret = (char *)malloc(sizeof(wchar_t) * 2);
+		sys->arg->ret[0] = w;
+		sys->arg->ret[1] = L'\0';
+	}
+	else
+	{
+		c = va_arg(ap, int);
+		sys->arg->ret = (char *)malloc(sizeof(char) * 2);
+		sys->arg->ret[0] = (unsigned char)c;
+		sys->arg->ret[1] = '\0';
+	}
 	if (sys->arg->padding)
 		sys->arg->padding->func(sys);
 	else
@@ -117,7 +139,7 @@ char	get_char(int num, t_sys *sys)
 {
 	if (num < 10)
 		return (48 + num);
-	if (sys->arg->c == 'x')
-		return (97 + (num - 10));
-	return (65 + (num - 10));
+	if (sys->arg->c == 'X')
+		return (65 + (num - 10));
+	return (97 + (num - 10));
 }

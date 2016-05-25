@@ -15,7 +15,8 @@ int		main()
 		long long %7zd\n\
 		size_t %7zd\n\
 		intmax_t - %jd\n\
-		intmax_t + %jd\n\n",
+		intmax_t + %jd\n\
+		wchar_t %d\n",
 		sizeof(char),
 		sizeof(short),
 		sizeof(int),
@@ -23,7 +24,8 @@ int		main()
 		sizeof(long long),
 		sizeof(size_t),
 		INTMAX_MIN,
-		INTMAX_MAX
+		INTMAX_MAX,
+		sizeof(wchar_t)
 		);
 	printf("true Printf: %#x puis %35.7d\n", 31, 45);
 	printf("true Printf: %d puis %35.7d\n", 31, 45);
@@ -49,6 +51,11 @@ int		main()
 	printf("true Printf: %hu \n", 59000);
 	printf("true Printf: %d \n", -6);
 	printf("true Printf: %d \n", -6789);
+	printf("true Printf: %p \n", str);
+	printf("true Printf: %-15p \n", str);
+	printf("true Printf: %010p \n", str);
+	printf("true Printf: %010.4p \n", str);
+	printf("true Printf: %lc \n", L'\xA1');
 
 	/*printf("cou %x\n", 31);
 	printf("cou %d\n", -31);
@@ -83,6 +90,11 @@ int		main()
 	ft_printf("fals printf: %hu \n", 59000);
 	ft_printf("fals printf: %d \n", -6);
 	ft_printf("fals printf: %d \n", -6789);
+	ft_printf("fals printf: %p \n", str);
+	ft_printf("fals printf: %-15p \n", str);
+	ft_printf("fals printf: %010p \n", str);
+	ft_printf("fals printf: %010.4p \n", str);
+	ft_printf("fals printf: %lc \n", L'\xA1');
 
 
 

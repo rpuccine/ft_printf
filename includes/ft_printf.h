@@ -16,13 +16,14 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stdarg.h>
+# include <wchar.h>
 
 # include <stdio.h>
 
 # define BUFF_SIZE 1023
 
 # define NB_FLAG 5
-# define NB_CONV 7
+# define NB_CONV 8
 # define NB_LEN 14
 
 /*# define NUM_U 1
@@ -30,7 +31,7 @@
 # define CHAR 3
 # define STR 4*/
 
-struct s_sys;	// ptr_flow - wide char
+struct s_sys;	// wide str
 
 typedef enum			e_bool{FALSE, TRUE} t_bool;
 
@@ -38,7 +39,7 @@ typedef enum			e_prio {LOW, HIGH} t_prio;
 
 typedef enum			e_type_flag {PREFIX, PADDING, SIGN} t_type_flag;
 
-typedef enum			e_t_arg {NUM_U, NUM_S, END_NB, ESCAPE, CHARS, STR} t_t_arg;
+typedef enum			e_t_arg {NUM_U, NUM_S, END_NB, ESCAPE, CHARS, STR, PTR} t_t_arg;
 
 typedef enum			e_len {CHAR, U_CHAR, SHORT, U_SHORT, INT, U_INT, LONG, U_LONG, \
 	LONG_LONG, U_LONG_LONG, INT_MAX, U_INT_MAX, SIZE_T, SSIZE_T} t_len;
@@ -50,6 +51,7 @@ typedef struct			s_val
 	char				c;
 	unsigned char		c_u;
 	char				*str;
+	void				*ptr;
 }						t_val;
 
 typedef struct			s_flag
@@ -168,6 +170,7 @@ void					field_neg(t_sys *sys);
 /*
 ** conv.c
 */
+void					ptr_flow(t_sys *sys, va_list ap);
 void					char_flow(t_sys *sys, va_list ap);
 void					str_flow(t_sys *sys, va_list ap);
 void					num_flow(t_sys *sys, va_list ap);
