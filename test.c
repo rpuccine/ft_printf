@@ -1,10 +1,22 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "includes/ft_printf.h"
+#include <locale.h>
 
 
 int		main()
 {
+
+	char* l = setlocale(LC_ALL, "");
+	if (l == NULL)
+	{
+		printf("Locale not set\n");
+	}
+	else
+	{
+		printf("Locale set to %s\n", l);
+	}
+
 
 	char	*str = "pipi prout";
 	//printf("coucou gros pd\n");
@@ -55,7 +67,7 @@ int		main()
 	printf("true Printf: %-15p \n", str);
 	printf("true Printf: %010p \n", str);
 	printf("true Printf: %010.4p \n", str);
-	printf("true Printf: %lc \n", L'\xA1');
+	printf("true Printf: %lc \n", L'\x82');
 
 	/*printf("cou %x\n", 31);
 	printf("cou %d\n", -31);
@@ -94,7 +106,7 @@ int		main()
 	ft_printf("fals printf: %-15p \n", str);
 	ft_printf("fals printf: %010p \n", str);
 	ft_printf("fals printf: %010.4p \n", str);
-	ft_printf("fals printf: %lc \n", L'\xA1');
+	ft_printf("fals printf: %lc \n", L'\x82');
 
 
 

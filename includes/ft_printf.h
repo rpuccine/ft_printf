@@ -65,6 +65,7 @@ typedef struct			s_flag
 typedef struct			s_arg
 {
 	char				*ret;
+	wchar_t				*ret_w;
 	char				c;
 	t_val				val;
 	t_t_arg				type;
@@ -92,7 +93,9 @@ typedef struct			s_conv
 typedef struct			s_sys
 {
 	char				buff[BUFF_SIZE + 1];
+	wchar_t				buff_w[BUFF_SIZE + 1];
 	int					i_buff;
+	int					i_buff_w;
 	int					b_write;
 	t_flag				*flags;
 	t_conv				*conv;
@@ -125,6 +128,9 @@ void					init_sys_arg(t_sys *sys);
 int						copy_c(t_sys *sys, char c);
 int						copy_arg(t_sys *sys);
 int						flush_buff(t_sys *sys);
+int						copy_c_w(t_sys *sys, wchar_t c);
+int						copy_arg_w(t_sys *sys);
+int						flush_buff_w(t_sys *sys);
 int						pow_ten(int pow);
 int						is_digit(char c);
 
@@ -133,6 +139,7 @@ int						is_digit(char c);
 */
 int						str_cmp(const char *str, const char *sample, int nb);
 size_t					ft_strlen(const char *str);
+size_t					ft_strlen_w(const wchar_t *str_w);
 void					prefix_with_c(char **str, char c, int nb_c);
 void					suffix_with_c(char **str, char c, int nb_c);
 void					concat_prefix(char **str, char *prefix);

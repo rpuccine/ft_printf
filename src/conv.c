@@ -52,9 +52,9 @@ void	char_flow(t_sys *sys, va_list ap)
 	if (sys->arg->pre_len_modif == 2)
 	{
 		w = (wchar_t)va_arg(ap, wint_t);
-		sys->arg->ret = (char *)malloc(sizeof(wchar_t) * 2);
-		sys->arg->ret[0] = w;
-		sys->arg->ret[1] = L'\0';
+		sys->arg->ret_w = (wchar_t *)malloc(sizeof(wchar_t) * 2);
+		sys->arg->ret_w[0] = w;
+		sys->arg->ret_w[1] = L'\0';
 	}
 	else
 	{
@@ -62,11 +62,15 @@ void	char_flow(t_sys *sys, va_list ap)
 		sys->arg->ret = (char *)malloc(sizeof(char) * 2);
 		sys->arg->ret[0] = (unsigned char)c;
 		sys->arg->ret[1] = '\0';
+		if (sys->arg->padding)
+			sys->arg->padding->func(sys);
+		else
+			field(sys);
 	}
-	if (sys->arg->padding)
+	/*if (sys->arg->padding)
 		sys->arg->padding->func(sys);
 	else
-		field(sys);
+		field(sys);*/
 }
 
 void	num_flow(t_sys *sys, va_list ap)

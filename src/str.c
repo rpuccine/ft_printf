@@ -31,6 +31,17 @@ size_t	ft_strlen(const char *str)
 	return (ret);
 }
 
+size_t	ft_strlen_w(const wchar_t *str_w)
+{
+	int	ret;
+
+	ret = 0;
+	while (str_w[ret])
+		ret++;
+	printf("strlen_w = %d\n", ret);
+	return (ret);
+}
+
 void	prefix_with_c(char **str, char c, int nb_c)
 {
 	int		len_str;
