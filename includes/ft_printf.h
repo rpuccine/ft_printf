@@ -31,7 +31,7 @@
 # define CHAR 3
 # define STR 4*/
 
-struct s_sys;	// wide str
+struct s_sys;	// wide str - menage wide char - (retour wide char)
 
 typedef enum			e_bool{FALSE, TRUE} t_bool;
 
@@ -132,12 +132,14 @@ int						copy_c_w(t_sys *sys, wchar_t c);
 int						copy_arg_w(t_sys *sys);
 int						flush_buff_w(t_sys *sys);
 int						pow_ten(int pow);
+int						pow_two(int pow);
 int						is_digit(char c);
 
 /*
 ** str.c
 */
 int						str_cmp(const char *str, const char *sample, int nb);
+void					ft_strcpy(char *dst, char *src);
 size_t					ft_strlen(const char *str);
 size_t					ft_strlen_w(const wchar_t *str_w);
 void					prefix_with_c(char **str, char c, int nb_c);
@@ -179,6 +181,14 @@ void					field_neg(t_sys *sys);
 */
 void					ptr_flow(t_sys *sys, va_list ap);
 void					char_flow(t_sys *sys, va_list ap);
+
+void					wide_char_flow(t_sys *sys, va_list ap);
+int						conv_binary(char **bin, unsigned int num, int call);
+int						get_mask(t_sys *sys, int len);
+void					fill_mask(t_sys *sys, char *bin, int len_bin, int len);
+void					conv_back(t_sys *sys, int len);
+int						bin_to_ten(t_sys *sys, int i);
+
 void					str_flow(t_sys *sys, va_list ap);
 void					num_flow(t_sys *sys, va_list ap);
 int						conv_num_rec(t_sys *sys, uintmax_t num, int nb_call);

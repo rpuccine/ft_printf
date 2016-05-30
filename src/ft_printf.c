@@ -59,24 +59,22 @@ int			ft_vprintf(const char *format, t_sys *sys, va_list ap)
 
 int			conversion(const char *format, t_sys *sys, va_list ap)
 {
-	//(void) ap;
 	init_sys_arg(sys);
 	if (parse_arg(++format, sys) < 0)
 		return (-1);
 	if (sys->arg->type < END_NB)
 		num_flow(sys, ap);
 	else if (sys->arg->type == CHARS)
-		char_flow(sys, ap);
+	{
+		if (sys->arg->pre_len_modif == 2)
+			wide_char_flow(sys, ap);
+		else
+			char_flow(sys, ap);
+	}
 	else if (sys->arg->type == STR)
 		str_flow(sys, ap);
 	else if (sys->arg->type == PTR)
 		ptr_flow(sys, ap);
-	if (sys->arg->type == CHARS && sys->arg->pre_len_modif == 2)
-		copy_arg_w(sys);
-	else
-		copy_arg(sys);
+	copy_arg(sys);
 	return (sys->arg->len_arg);
-	/*if (sys_arg.type < CHAR)
-		return (num_flow(&sys_arg, sys, ap));
-	return (str_flow(&sys_arg, sys, ap));*/
 }

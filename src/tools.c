@@ -93,6 +93,13 @@ int		pow_ten(int pow)
 	return (10 * pow_ten(--pow));
 }
 
+int		pow_two(int pow)
+{
+	if (!pow)
+		return (1);
+	return (2 * pow_two(--pow));
+}
+
 int		is_digit(char c)
 {
 	if (c > 47 && c < 58)

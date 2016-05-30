@@ -21,6 +21,16 @@ int		str_cmp(const char *str, const char *sample, int nb)
 	return (str_cmp(++str, ++sample, ++nb));
 }
 
+void	ft_strcpy(char *dst, char *src)
+{
+	int	i;
+
+	i = -1;
+	while (src[++i])
+		dst[i] = src[i];
+	dst[i] = '\0';
+}
+
 size_t	ft_strlen(const char *str)
 {
 	int	ret;
