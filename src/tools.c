@@ -45,47 +45,6 @@ int		flush_buff(t_sys *sys)
 	return (1);
 }
 
-int		copy_arg_w(t_sys *sys)
-{
-	int		i;
-
-	printf("copy_arg_w\n");
-	i = -1;
-	while (sys->arg->ret_w[++i])
-	{
-		printf("copy_c nb : %d\n", i);
-		copy_c_w(sys, sys->arg->ret_w[i]);
-	}
-	flush_buff_w(sys);
-	return (1);
-}
-
-int		copy_c_w(t_sys *sys, wchar_t c)
-{
-	printf("copy_c_w i_buff_w = %d\n", sys->i_buff_w);
-	if (sys->i_buff_w == BUFF_SIZE)
-	{
-		if (flush_buff_w(sys) < 0)
-			return (-1);
-	}
-	sys->buff_w[sys->i_buff_w++] = c;
-	return (1);
-}
-
-int		flush_buff_w(t_sys *sys)
-{
-	int	ret;
-
-	printf("flush_buff_w i_buff_w = %d\n", sys->i_buff_w);
-	sys->buff_w[sys->i_buff_w] = L'\0';
-	if ((ret = write(1, sys->buff_w, (ft_strlen_w(sys->buff_w) * sizeof(wchar_t)))) < 0)
-		return (-1);
-	sys->b_write += ret;
-	sys->i_buff_w = 0;
-	printf("flush_buff_w ret = %d\n", ret);
-	return (1);
-}
-
 int		pow_ten(int pow)
 {
 	if (!pow)

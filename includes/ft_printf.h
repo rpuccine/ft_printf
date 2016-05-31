@@ -31,7 +31,7 @@
 # define CHAR 3
 # define STR 4*/
 
-struct s_sys;	// wide str - menage wide char - (retour wide char)
+struct s_sys;	// wide str -
 
 typedef enum			e_bool{FALSE, TRUE} t_bool;
 
@@ -93,9 +93,7 @@ typedef struct			s_conv
 typedef struct			s_sys
 {
 	char				buff[BUFF_SIZE + 1];
-	wchar_t				buff_w[BUFF_SIZE + 1];
 	int					i_buff;
-	int					i_buff_w;
 	int					b_write;
 	t_flag				*flags;
 	t_conv				*conv;
@@ -128,9 +126,6 @@ void					init_sys_arg(t_sys *sys);
 int						copy_c(t_sys *sys, char c);
 int						copy_arg(t_sys *sys);
 int						flush_buff(t_sys *sys);
-int						copy_c_w(t_sys *sys, wchar_t c);
-int						copy_arg_w(t_sys *sys);
-int						flush_buff_w(t_sys *sys);
 int						pow_ten(int pow);
 int						pow_two(int pow);
 int						is_digit(char c);
@@ -184,10 +179,10 @@ void					char_flow(t_sys *sys, va_list ap);
 
 void					wide_char_flow(t_sys *sys, va_list ap);
 int						conv_binary(char **bin, unsigned int num, int call);
-int						get_mask(t_sys *sys, int len);
-void					fill_mask(t_sys *sys, char *bin, int len_bin, int len);
-void					conv_back(t_sys *sys, int len);
-int						bin_to_ten(t_sys *sys, int i);
+int						get_mask(char **tmp, int len);
+void					fill_mask(char *tmp, char *bin, int len_bin, int len);
+char					*conv_back(char *tmp, int len);
+int						bin_to_ten(char *tmp, int i);
 
 void					str_flow(t_sys *sys, va_list ap);
 void					num_flow(t_sys *sys, va_list ap);

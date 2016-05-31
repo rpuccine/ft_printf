@@ -25,6 +25,7 @@ int			ft_printf(const char *format, ...)
 		if (!(sys = init_sys()))
 			return (-1);
 	}
+	sys->b_write = 0;
 	va_start(ap, format);
 	ret = ft_vprintf(format, sys, ap);
 	va_end(ap);

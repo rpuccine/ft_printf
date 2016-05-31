@@ -62,30 +62,21 @@ void	wide_char_flow(t_sys *sys, va_list ap)
 {
 	wchar_t	w;
 	char	*bin;
+	char	*tmp;
 	int		len_bin;
-	int		len;
+	int		len_oct;
 
 	w = (wchar_t)va_arg(ap, wint_t);
-
-	printf("\nNb : %d\n", (unsigned int)w);
-
+	//printf("\nNb : %d\n", (unsigned int)w);
 	conv_binary(&bin, (unsigned int)w, 1);
-
-	printf("Bin : %s\n", bin);
-
+	//printf("Bin : %s\n", bin);
 	len_bin = ft_strlen(bin);
-	len = get_mask(sys, len_bin);
-
-	printf("Mask : %s\n", sys->arg->ret);
-
-	fill_mask(sys, bin, len_bin, len);
-
-	printf("Mask fill : %s\n", sys->arg->ret);
-
-	conv_back(sys, len);
-
-	printf("Char : %s\n\n", sys->arg->ret);
-
+	len_oct = get_mask(&tmp, len_bin);
+	//printf("Mask : %s\n", sys->arg->ret);
+	fill_mask(tmp, bin, len_bin, len_oct);
+	//printf("Mask fill : %s\n", sys->arg->ret);
+	sys->arg->ret = conv_back(tmp, len_oct);
+	//printf("Char : %s\n\n", sys->arg->ret);
 	if (sys->arg->padding)
 		sys->arg->padding->func(sys);
 	else
@@ -108,32 +99,32 @@ int		conv_binary(char **bin, unsigned int num, int call)
 	return (ret + 1);
 }
 
-int		get_mask(t_sys *sys, int len)
+int		get_mask(char **tmp, int len)
 {
 	if (len <= 7)
 	{
-		sys->arg->ret = (char *)malloc(sizeof(char) * 9);
-		ft_strcpy(sys->arg->ret, "0xxxxxxx");
+		*tmp = (char *)malloc(sizeof(char) * 9);
+		ft_strcpy(*tmp, "0xxxxxxx");
 		return (8);
 	}
 	else if (len <= 11)
 	{
-		sys->arg->ret = (char *)malloc(sizeof(char) * 17);
-		ft_strcpy(sys->arg->ret, "110xxxxx10xxxxxx");
+		*tmp = (char *)malloc(sizeof(char) * 17);
+		ft_strcpy(*tmp, "110xxxxx10xxxxxx");
 		return (16);
 	}
 	else if (len <= 16)
 	{
-		sys->arg->ret = (char *)malloc(sizeof(char) * 25);
-		ft_strcpy(sys->arg->ret, "1110xxxx10xxxxxx10xxxxxx");
+		*tmp = (char *)malloc(sizeof(char) * 25);
+		ft_strcpy(*tmp, "1110xxxx10xxxxxx10xxxxxx");
 		return (24);
 	}
-	sys->arg->ret = (char *)malloc(sizeof(char) * 33);
-	ft_strcpy(sys->arg->ret, "11110xxx10xxxxxx10xxxxxx10xxxxxx");
+	*tmp = (char *)malloc(sizeof(char) * 33);
+	ft_strcpy(*tmp, "11110xxx10xxxxxx10xxxxxx10xxxxxx");
 	return (32);
 }
 
-void	fill_mask(t_sys *sys, char *bin, int len_bin, int len)
+void	fill_mask(char *tmp, char *bin, int len_bin, int len)
 {
 	int		i;
 	int		j;
@@ -142,20 +133,20 @@ void	fill_mask(t_sys *sys, char *bin, int len_bin, int len)
 	j = len - 1;
 	while (i >= 0)
 	{
-		if (sys->arg->ret[j] == 'x')
-			sys->arg->ret[j--] = bin[i--];
+		if (tmp[j] == 'x')
+			tmp[j--] = bin[i--];
 		else
 			j--;
 	}
 	i = -1;
 	while (++i < len)
 	{
-		if (sys->arg->ret[i] == 'x')
-			sys->arg->ret[i] = '0';
+		if (tmp[i] == 'x')
+			tmp[i] = '0';
 	}
 }
 
-void	conv_back(t_sys *sys, int len)
+char	*conv_back(char *tmp, int len)
 {
 	int		oct;
 	int		i;
@@ -166,15 +157,14 @@ void	conv_back(t_sys *sys, int len)
 	i = 0;
 	while (i < oct)
 	{
-		final[i] = bin_to_ten(sys, i);
+		final[i] = bin_to_ten(tmp, i);
 		i++;
 	}
 	final[i] = '\0';
-	free(sys->arg->ret);
-	sys->arg->ret = final;
+	return (final);
 }
 
-int		bin_to_ten(t_sys *sys, int i)
+int		bin_to_ten(char *tmp, int i)
 {
 	int		ret;
 	int		j;
@@ -183,7 +173,7 @@ int		bin_to_ten(t_sys *sys, int i)
 	j = 0;
 	while (j < 8)
 	{
-		ret += (sys->arg->ret[i * 8 + j] - 48) * pow_two(7 - j);
+		ret += (tmp[i * 8 + j] - 48) * pow_two(7 - j);
 		j++;
 	}
 	return (ret);

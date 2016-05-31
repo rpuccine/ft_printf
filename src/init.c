@@ -20,7 +20,6 @@ t_sys	*init_sys(void)
 	if (!(sys = (t_sys *)malloc(sizeof(t_sys))))
 		return (NULL);
 	sys->i_buff = 0;
-	sys->i_buff_w = 0;
 	sys->b_write = 0;
 	if (init_flag(sys) < 0)
 		return (NULL);
