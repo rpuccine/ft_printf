@@ -65,6 +65,8 @@ int			conversion(const char *format, t_sys *sys, va_list ap)
 		return (-1);
 	if (sys->arg->type < END_NB)
 		num_flow(sys, ap);
+	else if (sys->arg->type == ESCAPE)
+		escape_flow(sys);
 	else if (sys->arg->type == CHARS)
 	{
 		if (sys->arg->pre_len_modif == 2)

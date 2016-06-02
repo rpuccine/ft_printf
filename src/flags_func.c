@@ -14,6 +14,11 @@
 
 void	prefix_hash(t_sys *sys)
 {
+	if (sys->arg->c == 'x' || sys->arg->c == 'X')
+	{
+		if (str_cmp(sys->arg->ret, "0", 1) > 0)
+			return ;
+	}
 	if (sys->arg->c == 'o')
 		concat_prefix(&(sys->arg->ret), "0");
 	else if (sys->arg->c == 'x' || sys->arg->c == 'p')
@@ -43,6 +48,11 @@ void	field_zero(t_sys *sys)
 	if ((ret = sys->arg->field - ft_strlen(sys->arg->ret)) <= 0)
 		return ;
 	prefix_with_c(&(sys->arg->ret), '0', ret);
+	if (sys->arg->prefix && (sys->arg->c == 'x' || sys->arg->c == 'X'))
+	{
+		sys->arg->ret[1 + ret] = '0';
+		sys->arg->ret[1] = sys->arg->c;
+	}
 }
 
 void	field_neg(t_sys *sys)

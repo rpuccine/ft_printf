@@ -23,7 +23,7 @@
 # define BUFF_SIZE 1023
 
 # define NB_FLAG 5
-# define NB_CONV 14
+# define NB_CONV 15
 # define NB_LEN 14
 
 /*# define NUM_U 1
@@ -146,7 +146,6 @@ void					concat_suffix(char **str, char *suffix);
 /*
 ** parse.c
 */
-int						set_escape(const char *format, t_sys *sys);
 int						parse_arg(const char *format, t_sys *sys);
 void					precision(t_sys *sys);
 void					field(t_sys *sys);
@@ -175,6 +174,7 @@ void					field_neg(t_sys *sys);
 /*
 ** conv.c
 */
+void					escape_flow(t_sys *sys);
 void					ptr_flow(t_sys *sys, va_list ap);
 void					char_flow(t_sys *sys, va_list ap);
 

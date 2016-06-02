@@ -141,6 +141,9 @@ int		init_conv(t_sys *sys)
 	sys->conv[13].c = 'C';
 	sys->conv[13].type = CHARS;
 	sys->conv[13].base = -1;
+	sys->conv[14].c = '%';
+	sys->conv[14].type = ESCAPE;
+	sys->conv[14].base = -1;
 	return (1);
 }
 

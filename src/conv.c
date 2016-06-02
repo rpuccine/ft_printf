@@ -12,6 +12,17 @@
 
 #include "ft_printf.h"
 
+void	escape_flow(t_sys *sys)
+{
+	sys->arg->ret = (char *)malloc(sizeof(char) * 2);
+	sys->arg->ret[0] = '%';
+	sys->arg->ret[1] = '\0';
+	if (sys->arg->padding)
+		sys->arg->padding->func(sys);
+	else
+		field(sys);
+}
+
 void	ptr_flow(t_sys *sys, va_list ap)
 {
 	sys->arg->val.ptr = va_arg(ap, void*);

@@ -12,24 +12,10 @@
 
 #include "ft_printf.h"
 
-int		set_escape(const char *format, t_sys *sys)
-{
-	if (*format != '%')
-		return (0);
-	sys->arg->len_arg++;
-	sys->arg->type = ESCAPE;
-	sys->arg->ret = (char *)malloc(sizeof(char) * 2);
-	sys->arg->ret[0] = '%';
-	sys->arg->ret[1] = '\0';
-	return (1);
-}
-
 int		parse_arg(const char *format, t_sys *sys)
 {
 	int		ret;
 
-	if (set_escape(format, sys))
-		return (1);
 	ret = set_flag(format, sys, 0);
 	format = format + ret;
 	ret = set_field(format, sys);
@@ -47,6 +33,13 @@ void	precision(t_sys *sys)
 {
 	int		ret;
 
+	if (sys->arg->precision == 0 && str_cmp(sys->arg->ret, "0", 1) > 0)
+	{
+		free(sys->arg->ret);
+		sys->arg->ret = (char *)malloc(sizeof(char));
+		sys->arg->ret[0] = '\0';
+		return ;
+	}
 	if ((ret = sys->arg->precision - ft_strlen(sys->arg->ret)) <= 0)
 		return ;
 	prefix_with_c(&(sys->arg->ret), '0', ret);
