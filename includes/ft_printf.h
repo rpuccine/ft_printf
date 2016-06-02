@@ -140,6 +140,7 @@ size_t					ft_strlen_w(const wchar_t *str_w);
 void					prefix_with_c(char **str, char c, int nb_c);
 void					suffix_with_c(char **str, char c, int nb_c);
 void					concat_prefix(char **str, char *prefix);
+void					concat_suffix(char **str, char *suffix);
 
 
 /*
@@ -178,6 +179,7 @@ void					ptr_flow(t_sys *sys, va_list ap);
 void					char_flow(t_sys *sys, va_list ap);
 
 void					wide_char_flow(t_sys *sys, va_list ap);
+char					*wide_char_conv(wchar_t w);
 int						conv_binary(char **bin, unsigned int num, int call);
 int						get_mask(char **tmp, int len);
 void					fill_mask(char *tmp, char *bin, int len_bin, int len);
@@ -185,6 +187,7 @@ char					*conv_back(char *tmp, int len);
 int						bin_to_ten(char *tmp, int i);
 
 void					str_flow(t_sys *sys, va_list ap);
+void					wide_str_flow(t_sys *sys,va_list ap);
 void					num_flow(t_sys *sys, va_list ap);
 int						conv_num_rec(t_sys *sys, uintmax_t num, int nb_call);
 int						conv_num_rec_s(t_sys *sys, intmax_t num, int nb_call, int sign);

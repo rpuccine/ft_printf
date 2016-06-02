@@ -44,6 +44,32 @@ void	str_flow(t_sys *sys, va_list ap)
 		field(sys);
 }
 
+void	wide_str_flow(t_sys *sys,va_list ap)
+{
+	wchar_t	*w_str;
+	char	*tmp;
+	int		len_tmp;
+	int		len_writen;
+
+
+	w_str = va_arg(ap, wchar_t*);
+	len_writen = 0;
+	while (*w_str != L'\0')
+	{
+		tmp = wide_char_conv(*w_str);
+		len_tmp = ft_strlen(tmp);
+		if (sys->arg->precision > 0 && len_writen + len_tmp > sys->arg->precision)
+			break;
+		len_writen += len_tmp;
+		concat_suffix(&(sys->arg->ret), tmp);
+		w_str++;
+	}
+	if (sys->arg->padding)
+		sys->arg->padding->func(sys);
+	else
+		field(sys);
+}
+
 void	char_flow(t_sys *sys, va_list ap)
 {
 	int		c;
@@ -61,26 +87,27 @@ void	char_flow(t_sys *sys, va_list ap)
 void	wide_char_flow(t_sys *sys, va_list ap)
 {
 	wchar_t	w;
+
+	w = (wchar_t)va_arg(ap, wint_t);
+	sys->arg->ret = wide_char_conv(w);
+	if (sys->arg->padding)
+		sys->arg->padding->func(sys);
+	else
+		field(sys);
+}
+
+char	*wide_char_conv(wchar_t w)
+{
 	char	*bin;
 	char	*tmp;
 	int		len_bin;
 	int		len_oct;
 
-	w = (wchar_t)va_arg(ap, wint_t);
-	//printf("\nNb : %d\n", (unsigned int)w);
 	conv_binary(&bin, (unsigned int)w, 1);
-	//printf("Bin : %s\n", bin);
 	len_bin = ft_strlen(bin);
 	len_oct = get_mask(&tmp, len_bin);
-	//printf("Mask : %s\n", sys->arg->ret);
 	fill_mask(tmp, bin, len_bin, len_oct);
-	//printf("Mask fill : %s\n", sys->arg->ret);
-	sys->arg->ret = conv_back(tmp, len_oct);
-	//printf("Char : %s\n\n", sys->arg->ret);
-	if (sys->arg->padding)
-		sys->arg->padding->func(sys);
-	else
-		field(sys);
+	return (conv_back(tmp, len_oct));
 }
 
 int		conv_binary(char **bin, unsigned int num, int call)

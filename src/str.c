@@ -36,6 +36,8 @@ size_t	ft_strlen(const char *str)
 	int	ret;
 
 	ret = 0;
+	if (!str)
+		return (0);
 	while (*str++)
 		ret++;
 	return (ret);
@@ -108,5 +110,26 @@ void	concat_prefix(char **str, char *prefix)
 		new[len2 + i] = (*str)[i];
 	new[len1 + len2] = '\0';
 	free(*str);
+	*str = new;
+}
+
+void	concat_suffix(char **str, char *suffix)
+{
+	int		len1;
+	int		len2;
+	int		i;
+	char	*new;
+
+	len1 = ft_strlen(*str);
+	len2 = ft_strlen(suffix);
+	new = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
+	i = -1;
+	while (++i < len1)
+		new[i] = (*str)[i];
+	i = -1;
+	while (++i < len2)
+		new[len1 + i] = suffix[i];
+	new[len1 + len2] = '\0';
+	//free(*str);
 	*str = new;
 }

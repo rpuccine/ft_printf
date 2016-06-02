@@ -73,6 +73,9 @@ int		main()
 	printf("true Printf: %8.3lc \n", 945);
 	printf("true Printf: ret = %d\n", printf("true Printf: %c \n", 'p'));
 	printf("true Printf: ret = %d\n", printf("true Printf: %lc \n", 945));
+	printf("true Printf: %ls \n", L"\u03A8\u03B1\u03A8\u03B1");
+	printf("true Printf: %.7ls \n", L"\u03A8\u03B1\u03A8\u03B1");
+	printf("true Printf: ret = %d\n", printf("true Printf: %ls \n", L"\u03A8\u03B1"));
 
 	/*printf("cou %x\n", 31);
 	printf("cou %d\n", -31);
@@ -117,6 +120,9 @@ int		main()
 	ft_printf("fals printf: %8.3lc \n", 945);
 	ft_printf("fals printf: ret = %d\n", ft_printf("fals printf: %c \n", 'p'));
 	ft_printf("fals printf: ret = %d\n", ft_printf("fals printf: %lc \n", 945));
+	ft_printf("fals printf: %ls \n", L"\u03A8\u03B1\u03A8\u03B1");
+	ft_printf("fals printf: %.7ls \n", L"\u03A8\u03B1\u03A8\u03B1");
+	ft_printf("fals printf: ret = %d\n", ft_printf("fals printf: %ls \n", L"\u03A8\u03B1"));
 
 
 
