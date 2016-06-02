@@ -23,7 +23,7 @@
 # define BUFF_SIZE 1023
 
 # define NB_FLAG 5
-# define NB_CONV 8
+# define NB_CONV 14
 # define NB_LEN 14
 
 /*# define NUM_U 1

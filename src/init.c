@@ -123,6 +123,24 @@ int		init_conv(t_sys *sys)
 	sys->conv[7].c = 'p';
 	sys->conv[7].type = PTR;
 	sys->conv[7].base = 16;
+	sys->conv[8].c = 'D';
+	sys->conv[8].type = NUM_S;
+	sys->conv[8].base = 10;
+	sys->conv[9].c = 'O';
+	sys->conv[9].type = NUM_U;
+	sys->conv[9].base = 8;
+	sys->conv[10].c = 'U';
+	sys->conv[10].type = NUM_U;
+	sys->conv[10].base = 10;
+	sys->conv[11].c = 'X';
+	sys->conv[11].type = NUM_U;
+	sys->conv[11].base = 16;
+	sys->conv[12].c = 'S';
+	sys->conv[12].type = STR;
+	sys->conv[12].base = -1;
+	sys->conv[13].c = 'C';
+	sys->conv[13].type = CHARS;
+	sys->conv[13].base = -1;
 	return (1);
 }
 

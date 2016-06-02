@@ -109,12 +109,9 @@ int				set_conv(const char *format, t_sys *sys)
 	sys->arg->type = sys->conv[i].type;
 	sys->arg->base = sys->conv[i].base;
 	sys->arg->len_arg++;
+	if (sys->arg->c != 'X' && sys->arg->c < 97)
+		sys->arg->pre_len_modif = 2;
 	return (1);
-	/*sys->arg->ret = (char *)malloc(sizeof(char) * 2);
-	sys->arg->ret[0] = '*';
-	sys->arg->ret[1] = '\0';
-	sys->arg->c = 'x';
-	sys->arg->len_arg++;*/
 }
 
 int				get_i_prefix_flag(t_sys *sys, char c)

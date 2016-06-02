@@ -77,6 +77,12 @@ int		main()
 	printf("true Printf: %.7ls \n", L"\u03A8\u03B1\u03A8\u03B1");
 	printf("true Printf: ret = %d\n", printf("true Printf: %ls \n", L"\u03A8\u03B1"));
 
+	printf("\ntrue Printf: %C \n", 945);
+	printf("true Printf: %S \n", L"\u03A8\u03B1\u03A8\u03B1");
+	printf("true Printf: %#X puis %35.7d\n", 31, 45);
+	printf("true Printf: %U puis %35.7d\n", 31, 45);
+	printf("true Printf: %+O puis %35.7d\n", 31, 45);
+
 	/*printf("cou %x\n", 31);
 	printf("cou %d\n", -31);
 	printf("cou %i\n", 31);
@@ -123,6 +129,12 @@ int		main()
 	ft_printf("fals printf: %ls \n", L"\u03A8\u03B1\u03A8\u03B1");
 	ft_printf("fals printf: %.7ls \n", L"\u03A8\u03B1\u03A8\u03B1");
 	ft_printf("fals printf: ret = %d\n", ft_printf("fals printf: %ls \n", L"\u03A8\u03B1"));
+
+	ft_printf("\nfals printf: %C \n", 945);
+	ft_printf("fals printf: %S \n", L"\u03A8\u03B1\u03A8\u03B1");
+	ft_printf("fals printf: %#X puis %35.7d\n", 31, 45);
+	ft_printf("fals printf: %U puis %35.7d\n", 31, 45);
+	ft_printf("fals printf: %+O puis %35.7d\n", 31, 45);
 
 
 
