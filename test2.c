@@ -21,6 +21,13 @@ int		main()
 	printf("%#x\n", 0);
 	printf("%#.x\n", 0);
 	printf("%#.x\n", 250);
+	printf("@moulitest: %#.x, %#.0x\n", 0, 0);
+	printf("%0+5d\n", 42);
+	//printf("@moulitest: %s\n", NULL);
+	printf("%03.2d\n", 1);
+	printf("%03.2d\n", -1);
+	printf("%3.2d\n", 1);
+	printf("@moulitest: %.10d\n", -42);
 
 	printf("\n");
 
@@ -29,5 +36,12 @@ int		main()
 	ft_printf("%#x\n", 0);
 	ft_printf("%#.x\n", 0);
 	ft_printf("%#.x\n", 250);
+	ft_printf("@moulitest: %#.x, %#.0x\n", 0, 0);
+	ft_printf("%0+5d\n", 42);
+	//ft_printf("@moulitest: %s\n", NULL);
+	ft_printf("%03.2d\n", 1);
+	ft_printf("%03.2d\n", -1);
+	ft_printf("%3.2d\n", 1);
+	ft_printf("@moulitest: %.10d\n", -42);
 	return (0);
 }

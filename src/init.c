@@ -156,6 +156,7 @@ void	init_sys_arg(t_sys *sys)
 	sys->arg->val.c = 0;
 	sys->arg->val.c_u = 0;
 	sys->arg->val.str = NULL;
+	sys->arg->neg = 0;
 	sys->arg->type = -1;
 	sys->arg->len_modif = INT;
 	sys->arg->base = 0;

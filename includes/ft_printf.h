@@ -67,6 +67,7 @@ typedef struct			s_arg
 	char				*ret;
 	wchar_t				*ret_w;
 	char				c;
+	int					neg;
 	t_val				val;
 	t_t_arg				type;
 	int					pre_len_modif;

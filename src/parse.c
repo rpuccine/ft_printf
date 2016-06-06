@@ -40,9 +40,22 @@ void	precision(t_sys *sys)
 		sys->arg->ret[0] = '\0';
 		return ;
 	}
-	if ((ret = sys->arg->precision - ft_strlen(sys->arg->ret)) <= 0)
-		return ;
-	prefix_with_c(&(sys->arg->ret), '0', ret);
+	ret = sys->arg->precision - ft_strlen(sys->arg->ret);
+	if (sys->arg->neg)
+	{
+		ret += 1;
+		if (ret <= 0)
+			return ;
+		prefix_with_c(&(sys->arg->ret), '0', ret);
+		sys->arg->ret[ret] = '0';
+		sys->arg->ret[0] = '-';
+	}
+	else
+	{
+		if (ret <= 0)
+			return ;
+		prefix_with_c(&(sys->arg->ret), '0', ret);
+	}
 }
 
 void	field(t_sys *sys)

@@ -14,9 +14,10 @@
 
 void	prefix_hash(t_sys *sys)
 {
+	//printf("ret in hash : %s\n", sys->arg->ret);
 	if (sys->arg->c == 'x' || sys->arg->c == 'X')
 	{
-		if (str_cmp(sys->arg->ret, "0", 1) > 0)
+		if (!*sys->arg->ret || str_cmp(sys->arg->ret, "0", 1) > 0)
 			return ;
 	}
 	if (sys->arg->c == 'o')
@@ -35,8 +36,10 @@ void	prefix_posi_blank(t_sys *sys)
 
 void	prefix_posi_sign(t_sys *sys)
 {
-	if (sys->arg->type == NUM_S && sys->arg->val.num > 0)
+	if (sys->arg->type == NUM_S && sys->arg->val.num >= 0)
+	{
 		prefix_with_c(&(sys->arg->ret), '+', 1);
+	}
 }
 
 void	field_zero(t_sys *sys)
@@ -52,6 +55,16 @@ void	field_zero(t_sys *sys)
 	{
 		sys->arg->ret[1 + ret] = '0';
 		sys->arg->ret[1] = sys->arg->c;
+	}
+	if (sys->arg->neg)
+	{
+		sys->arg->ret[ret] = '0';
+		sys->arg->ret[0] = '-';
+	}
+	else if (sys->arg->sign && sys->arg->sign->prio == HIGH)
+	{
+		sys->arg->ret[ret] = '0';
+		sys->arg->ret[0] = '+';
 	}
 }
 

@@ -40,6 +40,11 @@ void	str_flow(t_sys *sys, va_list ap)
 	int		i;
 
 	sys->arg->val.str = va_arg(ap, char*);
+	if (!sys->arg->val.str)
+	{
+		sys->arg->val.str = (char *)malloc(sizeof(char) * 7);
+		ft_strcpy(sys->arg->val.str, "(null)");
+	}
 	if (sys->arg->precision > 0)
 		len_str = sys->arg->precision;
 	else
@@ -258,11 +263,22 @@ int		conv_num_rec_s(t_sys *sys, intmax_t num, int nb_call, int sign)
 {
 	int	ret;
 
+	/*(void) nb_call;
+	(void) sign;
+	if (num < 0)
+	{
+		sys->arg->neg = 1;
+		num = num * -1;
+		sys->arg->sign = sys->flag + 2;
+	}
+	conv_num_rec(sys, (uintmax_t)num, 1);*/
+
 	if (sign == -1)
 	{
 		if (num < 0)
 		{
 			sign = 1;
+			sys->arg->neg = 1;
 			num = num * -1;
 		}
 		else

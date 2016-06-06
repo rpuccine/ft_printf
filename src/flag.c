@@ -72,6 +72,8 @@ int				set_precision(const char *format, t_sys *sys)
 	while (++i < len)
 		total += (format[i] - 48) * pow_ten(len - (i + 1));
 	sys->arg->precision = total;
+	if (sys->arg->padding && sys->arg->padding->prio == LOW)
+		sys->arg->padding = NULL;
 	return (len + 1);
 }
 
